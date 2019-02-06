@@ -15,7 +15,7 @@ INSTALLED_APPS = (
     'testapp',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'qinspect.middleware.QueryInspectMiddleware',
 )
 
