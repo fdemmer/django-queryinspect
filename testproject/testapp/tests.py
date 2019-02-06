@@ -1,3 +1,5 @@
+import time
+
 from django.test import TestCase
 
 from .models import Author, Book, Publisher
@@ -51,6 +53,17 @@ class TestQueryInspect(TestCase):
         self.assertEqual(response['X-QueryInspect-Num-SQL-Queries'], '1')
         self.assertTrue('X-QueryInspect-Total-Request-Time' in response)
         self.assertEqual(response['X-QueryInspect-Duplicate-SQL-Queries'], '0')
+
+    def test_http_404(self):
+        with self.settings(DEBUG=True):
+            r1 = self.client.get('/book/')
+            r2 = self.client.get('/book/')
+
+        def total(response):
+            return int(response['X-QueryInspect-Total-Request-Time'].split()[0])
+
+        self.assertTrue(1000 < total(r1) < 1050)
+        self.assertTrue(1000 < total(r2) < 1050)
 
     def test_query_inspect(self):
         self.author = Author.objects.create(name='Author')
