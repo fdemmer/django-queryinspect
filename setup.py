@@ -27,7 +27,7 @@ class TestCommand(BaseCommand):
 
 setup(
     name='django-queryinspect',
-    version='1.0.0',
+    version='1.1.0-beta',
     author='Senko Rasic',
     author_email='senko.rasic@goodcode.io',
     description='Django Query Inspector',
