@@ -1,5 +1,8 @@
 import json
-from django.http import HttpResponse
+import time
+
+from django.http import HttpResponse, Http404
+
 from .models import Author, Book
 
 
@@ -24,5 +27,8 @@ def get_authors_with_books(request):
 
 
 def book(request):
-    book = Book.objects.all()[0]
+    book = Book.objects.first()
+    if not book:
+        time.sleep(1)
+        raise Http404
     return JsonResponse({'title': book.title})
